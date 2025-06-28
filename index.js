@@ -1,1 +1,588 @@
-const _0x499487=_0x416f;(function(_0x39367f,_0x27d5c4){const _0xbbd10d=_0x416f,_0x1ee2f6=_0x39367f();while(!![]){try{const _0x104a51=parseInt(_0xbbd10d(0x120))/0x1*(-parseInt(_0xbbd10d(0x114))/0x2)+parseInt(_0xbbd10d(0x1a3))/0x3*(parseInt(_0xbbd10d(0x151))/0x4)+parseInt(_0xbbd10d(0x122))/0x5+parseInt(_0xbbd10d(0x13c))/0x6+parseInt(_0xbbd10d(0x124))/0x7*(-parseInt(_0xbbd10d(0x12b))/0x8)+parseInt(_0xbbd10d(0x165))/0x9*(-parseInt(_0xbbd10d(0x11a))/0xa)+parseInt(_0xbbd10d(0x139))/0xb;if(_0x104a51===_0x27d5c4)break;else _0x1ee2f6['push'](_0x1ee2f6['shift']());}catch(_0xa5f0c){_0x1ee2f6['push'](_0x1ee2f6['shift']());}}}(_0x10e8,0xe8019));const _0x2484f5=_0xe5b0;(function(_0xc5966b,_0x494c8d){const _0x157585=_0x416f,_0x4f64a9=_0xe5b0,_0x34e910=_0xc5966b();while(!![]){try{const _0x166a10=-parseInt(_0x4f64a9(0x17f))/0x1+-parseInt(_0x4f64a9(0x1e2))/0x2+-parseInt(_0x4f64a9(0x1d9))/0x3+-parseInt(_0x4f64a9(0x197))/0x4*(parseInt(_0x4f64a9(0x1fd))/0x5)+parseInt(_0x4f64a9(0x20d))/0x6*(-parseInt(_0x4f64a9(0x1ec))/0x7)+parseInt(_0x4f64a9(0x1cf))/0x8*(-parseInt(_0x4f64a9(0x206))/0x9)+parseInt(_0x4f64a9(0x1d6))/0xa;if(_0x166a10===_0x494c8d)break;else _0x34e910['push'](_0x34e910[_0x157585(0x19f)]());}catch(_0x4f9937){_0x34e910[_0x157585(0x13b)](_0x34e910[_0x157585(0x19f)]());}}}(_0x4a4b,0x7358b));const _0x7c3362=_0x3978;(function(_0x464f62,_0x318696){const _0x89da13=_0x416f,_0x44d9b8=_0xe5b0,_0x131b43=_0x3978,_0x1b2c87=_0x464f62();while(!![]){try{const _0x1dac73=parseInt(_0x131b43(0x12f))/0x1+parseInt(_0x131b43(0x124))/0x2*(-parseInt(_0x131b43(0x127))/0x3)+parseInt(_0x131b43(0x152))/0x4+-parseInt(_0x131b43(0x11c))/0x5+-parseInt(_0x131b43(0xce))/0x6+parseInt(_0x131b43(0xd5))/0x7*(parseInt(_0x131b43(0x146))/0x8)+parseInt(_0x131b43(0x13d))/0x9;if(_0x1dac73===_0x318696)break;else _0x1b2c87[_0x89da13(0x13b)](_0x1b2c87[_0x44d9b8(0x1e8)]());}catch(_0x1d9d06){_0x1b2c87[_0x44d9b8(0x184)](_0x1b2c87[_0x44d9b8(0x1e8)]());}}}(_0x4bf4,0x5293e));const fs=require('fs'),Web3=require(_0x7c3362(0xec)),axios=require(_0x7c3362(0x118)),INVITE_CODE=_0x7c3362(0x149),RPC_URL=_0x7c3362(0x128),CHAIN_ID=0xa8230,WETH_CONTRACT=_0x499487(0x16a),ROUTER_CONTRACT=_0x7c3362(0x11b),STABLE_COINS=[_0x2484f5(0x1fe),_0x7c3362(0x116)],DAILY_RUN_INTERVAL=0x18*0x3c*0x3c*0x3e8;let cycleStartTime=null,totalSwaps=0x0,totalSends=0x0;const commonHeaders={'accept':_0x7c3362(0x153),'accept-encoding':_0x7c3362(0x123),'accept-language':_0x7c3362(0x133),'origin':_0x7c3362(0x10a),'priority':_0x7c3362(0x129),'referer':_0x7c3362(0xeb),'sec-ch-ua':_0x7c3362(0xcb),'sec-ch-ua-mobile':'?0','sec-ch-ua-platform':_0x499487(0x19a),'sec-fetch-dest':_0x7c3362(0x12b),'sec-fetch-mode':_0x7c3362(0xc0),'sec-fetch-site':_0x7c3362(0x114),'sec-gpc':'1','user-agent':_0x7c3362(0xf6)},web3=new Web3(RPC_URL);let nextRunTime=null;function _0xe5b0(_0x165808,_0x5be3c3){const _0x512bd8=_0x4a4b();return _0xe5b0=function(_0x1670df,_0x4320e6){_0x1670df=_0x1670df-0x17e;let _0x27e63b=_0x512bd8[_0x1670df];return _0x27e63b;},_0xe5b0(_0x165808,_0x5be3c3);}function formatTime(_0x3c1130){const _0x4f6dca=_0x7c3362;return new Date(_0x3c1130)[_0x4f6dca(0xbc)](_0x4f6dca(0x130),{'month':'short','day':_0x4f6dca(0xdf),'hour':_0x4f6dca(0xdf),'minute':_0x4f6dca(0xbd),'second':_0x4f6dca(0xbd),'hour12':!![]});}function randomDelay(_0x4f4577=0x2710,_0x19ecfd=0x4e20){const _0x4fecbd=_0x2484f5,_0x8093b6=_0x7c3362,_0x5b7480=Math[_0x4fecbd(0x208)](Math[_0x4fecbd(0x1f2)]()*(_0x19ecfd-_0x4f4577+0x1))+_0x4f4577;return console[_0x8093b6(0x115)](_0x4fecbd(0x1da)+(_0x5b7480/0x3e8)[_0x8093b6(0x120)](0x1)+'s'),new Promise(_0x5719ca=>setTimeout(_0x5719ca,_0x5b7480));}async function withRetry(_0x433692,_0x3364ad=0x5,_0x10261d=0x1388){const _0x231fbf=_0x499487,_0x342d93=_0x2484f5,_0xb9501a=_0x7c3362;let _0x1485b7=0x0;while(!![]){try{return await _0x433692();}catch(_0x2166fb){if(_0x1485b7>=_0x3364ad)throw _0x2166fb;const _0x3a7c88=_0x10261d*Math[_0xb9501a(0x122)](0x2,_0x1485b7);console[_0xb9501a(0x115)](_0xb9501a(0xcc)+(_0x3a7c88/0x3e8)[_0x342d93(0x19a)](0x1)+_0x231fbf(0x131)+(_0x1485b7+0x1)+'/'+_0x3364ad+')'),await new Promise(_0x40436f=>setTimeout(_0x40436f,_0x3a7c88)),_0x1485b7++;}}}function _0x3978(_0xb9051d,_0x414733){const _0x5f48ea=_0x4bf4();return _0x3978=function(_0x104304,_0x1f43e6){_0x104304=_0x104304-0xbc;let _0x37a09a=_0x5f48ea[_0x104304];return _0x37a09a;},_0x3978(_0xb9051d,_0x414733);}function readPrivateKeys(){const _0x29d6e4=_0x7c3362,_0x134c3f=fs[_0x29d6e4(0xf3)](_0x29d6e4(0x100),_0x29d6e4(0xf1))[_0x29d6e4(0xc3)]('\x0a')[_0x29d6e4(0x103)](_0x5d768d=>_0x5d768d[_0x29d6e4(0x10d)]())[_0x29d6e4(0x10c)](_0xe2d11=>_0xe2d11!=='');return console[_0x29d6e4(0x115)](_0x29d6e4(0x112)+_0x134c3f[_0x29d6e4(0x14e)]+_0x29d6e4(0xf5)+(_0x134c3f[_0x29d6e4(0x14e)]!==0x1?'s':'')),_0x134c3f;}async function loginUser(_0x10a24f){const _0x2000f6=_0x499487,_0x3bb74c=_0x2484f5,_0x5b9c8a=_0x7c3362,_0x1668ac=web3[_0x5b9c8a(0x121)][_0x5b9c8a(0x107)][_0x5b9c8a(0x14f)](_0x10a24f),_0x1e6ffd=_0x1668ac[_0x3bb74c(0x1cb)](_0x3bb74c(0x20c))[_0x5b9c8a(0x132)],_0x181d2a=await axios[_0x5b9c8a(0x141)](_0x3bb74c(0x1ce)+_0x1668ac[_0x3bb74c(0x21a)]+_0x5b9c8a(0x14c)+_0x1e6ffd+_0x2000f6(0x182)+INVITE_CODE,null,{'headers':{...commonHeaders,'authorization':_0x3bb74c(0x1c6),'content-length':'0'}});if(_0x181d2a[_0x5b9c8a(0x12a)][_0x2000f6(0x176)]!==0x0)throw new Error(_0x5b9c8a(0xd0)+_0x181d2a[_0x5b9c8a(0x12a)][_0x5b9c8a(0x111)]);const _0x413874=_0x181d2a[_0x5b9c8a(0x12a)][_0x5b9c8a(0x12a)]?.[_0x2000f6(0x16d)]||_0x181d2a[_0x5b9c8a(0x12a)][_0x3bb74c(0x1e6)];if(!_0x413874)throw new Error(_0x5b9c8a(0xc6));return{'address':_0x1668ac[_0x3bb74c(0x21a)],'token':_0x413874};}function _0x4a4b(){const _0x2ce629=_0x499487,_0x4901e9=[_0x2ce629(0x1a5),_0x2ce629(0x17e),'padStart',_0x2ce629(0x132),_0x2ce629(0x18d),_0x2ce629(0x14a),_0x2ce629(0x102),'random',_0x2ce629(0x161),_0x2ce629(0x121),_0x2ce629(0x18f),_0x2ce629(0x10f),_0x2ce629(0x170),_0x2ce629(0x145),_0x2ce629(0x177),_0x2ce629(0x105),_0x2ce629(0x12d),'2-digit',_0x2ce629(0x14f),_0x2ce629(0x149),'axios',_0x2ce629(0x163),_0x2ce629(0x107),'length',_0x2ce629(0x197),_0x2ce629(0x14e),_0x2ce629(0x186),_0x2ce629(0x185),_0x2ce629(0x10b),_0x2ce629(0x192),_0x2ce629(0x16e),'toString',_0x2ce629(0x19b),_0x2ce629(0x10d),'36rqyfQu',_0x2ce629(0x127),_0x2ce629(0x18c),'\x20ETH','exit','slice',_0x2ce629(0x1a1),_0x2ce629(0x10e),_0x2ce629(0x115),'Bot\x20created\x20by:\x20https://t.me/airdropwithmeh','getGasPrice',_0x2ce629(0x18e),_0x2ce629(0x10a),_0x2ce629(0x14b),_0x2ce629(0x11d),_0x2ce629(0x1a4),'wallet',_0x2ce629(0x136),_0x2ce629(0x193),_0x2ce629(0x118),_0x2ce629(0x13b),_0x2ce629(0x12c),_0x2ce629(0x179),'toWei',_0x2ce629(0x108),_0x2ce629(0x15d),_0x2ce629(0x16c),_0x2ce629(0x154),_0x2ce629(0x129),'log','USDT','\x0a✅\x20Swap\x20Successful:',_0x2ce629(0x143),_0x2ce629(0xff),_0x2ce629(0x125),_0x2ce629(0x17f),'-\x20Task\x20',_0x2ce629(0x117),_0x2ce629(0x176),_0x2ce629(0x167),'numeric','filter',_0x2ce629(0x198),_0x2ce629(0x119),_0x2ce629(0x183),_0x2ce629(0x130),'rawTransaction',_0x2ce629(0x110),_0x2ce629(0x155),_0x2ce629(0x19c),_0x2ce629(0x157),_0x2ce629(0x156),_0x2ce629(0x184),'stringify','response',_0x2ce629(0x195),_0x2ce629(0x17b),_0x2ce629(0x128),'API\x20Error:\x20','empty','&signature=','sendSignedTransaction','N/A',_0x2ce629(0x12a),_0x2ce629(0x19d),_0x2ce629(0x111),_0x2ce629(0x172),_0x2ce629(0x189),_0x2ce629(0x17d),_0x2ce629(0x123),_0x2ce629(0x126),_0x2ce629(0x11c),_0x2ce629(0x166),_0x2ce629(0x116),_0x2ce629(0x152),_0x2ce629(0x199),_0x2ce629(0x137),_0x2ce629(0x173),'\x22Chromium\x22;v=\x22136\x22,\x20\x22Brave\x22;v=\x22136\x22,\x20\x22Not.A/Brand\x22;v=\x2299\x22',_0x2ce629(0x19e),_0x2ce629(0x174),_0x2ce629(0x15c),_0x2ce629(0x160),_0x2ce629(0x168),_0x2ce629(0x178),_0x2ce629(0x13f),_0x2ce629(0x13e),_0x2ce629(0x17a),_0x2ce629(0x181),_0x2ce629(0x113),_0x2ce629(0x153),_0x2ce629(0x196),_0x2ce629(0x13a),_0x2ce629(0x100),_0x2ce629(0x171),'7466416SedIoR',_0x2ce629(0x109),_0x2ce629(0x15e),_0x2ce629(0x16b),'get',_0x2ce629(0x175),_0x2ce629(0x1a6),_0x2ce629(0x138),_0x2ce629(0x103),_0x2ce629(0x194),_0x2ce629(0x15b),_0x2ce629(0x15f),_0x2ce629(0x14d),'59416UCtDrO','-\x20Processed\x20wallets:\x20','https://testnet.dplabs-internal.com','https://testnet.pharosnetwork.xyz',_0x2ce629(0x135),'trim',_0x2ce629(0x10c),_0x2ce629(0x159),'✅\x20Daily\x20check-in\x20successful!',_0x2ce629(0x18a),'jwt','\x20missing\x20social\x20tasks','shift','🔍\x20Verifying\x20social\x20task\x20',_0x2ce629(0x134)];return _0x4a4b=function(){return _0x4901e9;},_0x4a4b();}async function checkStatus(_0x4a32c5,_0x266ab2){const _0x32db72=_0x499487,_0x36ebcd=_0x7c3362,_0x33f45d=await axios['get'](_0x36ebcd(0xd2)+_0x4a32c5,{'headers':{...commonHeaders,'authorization':'Bearer\x20'+_0x266ab2}});return _0x33f45d[_0x32db72(0x10a)][_0x36ebcd(0x12a)][_0x36ebcd(0xd3)];}async function fetchTaskStatus(_0x2b51b9,_0x15642c){const _0x552cf7=_0x2484f5,_0x471b74=_0x7c3362,_0x2d3e93=await axios[_0x471b74(0xda)](_0x552cf7(0x1b8)+_0x2b51b9,{'headers':{...commonHeaders,'authorization':_0x471b74(0x11a)+_0x15642c}}),_0xff10e7=_0x2d3e93[_0x471b74(0x12a)][_0x471b74(0x12a)][_0x471b74(0xca)]||[];return{'swapsCompleted':_0xff10e7[_0x552cf7(0x1b3)](_0x78a964=>_0x78a964[_0x552cf7(0x1f1)]===0x65)?.[_0x552cf7(0x1d1)]||0x0,'sendsCompleted':_0xff10e7[_0x471b74(0xc7)](_0x5a252a=>_0x5a252a[_0x471b74(0x108)]===0x67)?.[_0x471b74(0xfc)]||0x0,'socialTasks':{0xc9:_0xff10e7[_0x471b74(0xc7)](_0x2a30b1=>_0x2a30b1[_0x471b74(0x108)]===0xc9)?.[_0x471b74(0xfc)]||0x0,0xca:_0xff10e7[_0x471b74(0xc7)](_0x16a638=>_0x16a638[_0x471b74(0x108)]===0xca)?.[_0x552cf7(0x1d1)]||0x0,0xcb:_0xff10e7[_0x471b74(0xc7)](_0x388274=>_0x388274[_0x471b74(0x108)]===0xcb)?.[_0x471b74(0xfc)]||0x0,0xcc:_0xff10e7[_0x471b74(0xc7)](_0x1eb5d0=>_0x1eb5d0[_0x552cf7(0x1f1)]===0xcc)?.[_0x471b74(0xfc)]||0x0}};}function _0x10e8(){const _0x26b169=['\x20sends...','0xEd59De2D7ad9C043442e381231eE3646FC3C2939','multicall','address','&task_id=','encodeFunctionCall','pow','215fIIvSj','values','1032RUgQHt','bytes[]','add','\x20verified','private_keys.txt','576QBQasy','\x0a❌\x20Swap\x20Failed:','0000000000000000000000000000000000000000000000000000000000000bb8','readFileSync','\x20completion','2587434lAjlwX','\x20verification\x20failed:\x20','\x20══════════','CompleteTimes','\x0a⌛\x20Next\x20wallet\x20delay:\x20','\x0a══════════\x20Wallet\x20','\x20(already\x20completed)','split','signature','Login\x20failed:\x20','18XyvEQW','https://api.pharosnetwork.xyz/user/tasks?address=','41476EQbNbv','utf-8','Check-in\x20failed:\x20','0x76aaaDA469D23216bE5f7C596fA25F282Ff9b364','\x20(Code\x20','⏱️\x20Cycle\x20started\x20at:\x20','jwt','message','log','user_tasks','https://api.pharosnetwork.xyz/user/login?address=','❌\x20Check-in\x20error:','map','igTbAn078cxwfif2','SIGINT','code','799004sFWmMT','31161QDrNKX','Bearer\x20','⏩\x20Already\x20checked\x20in\x20today','\x0a💡\x20Final\x20Summary:','web3','\x0a🔧\x20Found\x20','693763rUEvuV','🔍\x20Verifying\x20send\x20task...','create','deadline','&invite_code=','remove','\x0a🎉\x20All\x20social\x20tasks\x20already\x20completed','9pKKQaF','https://api.pharosnetwork.xyz/sign/in?address=','📊\x20Status\x20Code:\x20','52txpadT','find','en-US','max','transactionHash','⚠️\x20Verification\x20Error:\x20','\x0a📊\x20Social\x20Task\x20Status:','0x1a4de519154ae51200b0ad7c90f7fac75547888a','JWT\x20token\x20not\x20found\x20in\x20login\x20response','To:\x20','floor','abi','repeat','3600270suGVIR','sign','accounts','toFixed','estimateGas','\x22Windows\x22','success','function','\x20wallet','\x0a❌\x20Transfer\x20Failed:','shift','getTransactionCount','✅\x20Social\x20task\x20','uint256','8556ZsUbkW','399355nojGFq','⏩\x20Skipping\x20task\x20','2471690EsWiVF','response','toLowerCase','text/plain','\x0a📂\x20Loaded\x20','TaskId','TX\x20Hash:\x20','post','\x20social\x20tasks','-\x20Total\x20sends\x20completed:\x20','\x0a📤\x20Starting\x20','gzip,\x20deflate,\x20br,\x20zstd','USDC','data','eth','955980MkTKbV','pharos','Auto\x20Daily\x20Checkin,\x20Swap\x20and\x20Send\x20Pharos','📄\x20Server\x20Response:\x20','⚡\x20Performing\x20check-in...','same-site','✅\x20Successfully\x20verified\x20','https://testnet.pharosnetwork.xyz/','352722ZulGOP','✅\x20Authenticated:\x20','0000000000000000000000000000000000000000000000000000000000000000','application/json,\x20text/plain,\x20*/*','error','en-GB,en;q=0.6','7146110WZOtrk','0x04e45aaf','forEach','signTransaction','gas','Amount:\x20','10MWItRH','u=1,\x20i','8997570ukiLmB','2347587YTPwWM','266sVkfsB','privateKeyToAccount','✅\x20Send\x20tx\x20hash\x20verified','&tx_hash=','catch','\x0a⏰\x20Next\x20cycle\x20will\x20start\x20at:\x20','ether','61104VUyHQe','Retrying\x20in\x20','⚠️\x20Unexpected\x20check-in\x20response:','⚠️\x20Social\x20task\x20','now','-\x20Total\x20swaps\x20completed:\x20','s...\x20(Attempt\x20','\x0a🔄\x20Starting\x20','random','toBN','https://api.pharosnetwork.xyz/sign/status?address=','status','...','41861050KLgHEq','1501621sZtbBb','⚠️\x20Wallet\x20processing\x20failed:\x20','push','10569192dVyXEQ','630953vyyMzi','Bearer\x20null','\x0a✅\x20Transfer\x20Successful:','verified','msg','🚨\x20Fatal\x20error:','toLocaleString','utils','\x0a🛑\x20Process\x20stopped\x20|\x20Next\x20run\x20was\x20scheduled\x20for:\x20','\x20PHRS\x20→\x20','https://api.pharosnetwork.xyz/task/verify?address='];_0x10e8=function(){return _0x26b169;};return _0x10e8();}async function verifySocialTasks(_0x3a76bd,_0x25fa10,_0x3c32d5){const _0x266522=_0x499487,_0x3f512f=_0x2484f5,_0x36d7c2=_0x7c3362,_0x4f6dbc=[0xc9,0xca,0xcb,0xcc];let _0x2aad51=0x0;for(const _0x320770 of _0x4f6dbc){if(_0x3c32d5[_0x320770]>0x0){console[_0x36d7c2(0x115)](_0x3f512f(0x1eb)+_0x320770+_0x36d7c2(0x150));continue;}try{console[_0x36d7c2(0x115)](_0x36d7c2(0x13a)+_0x320770+_0x36d7c2(0x145)),await withRetry(async()=>{await verifyTask(_0x3a76bd,_0x25fa10,_0x320770,'0x');},0x3,0x7d0),console[_0x36d7c2(0x115)](_0x36d7c2(0x12c)+_0x320770+_0x36d7c2(0x151)),_0x2aad51++;}catch(_0x1334fb){console[_0x36d7c2(0x126)](_0x266522(0x12e)+_0x320770+_0x36d7c2(0x109)+_0x1334fb[_0x3f512f(0x209)]);}await new Promise(_0x26f7a1=>setTimeout(_0x26f7a1,0x7d0));}return _0x2aad51;}function _0x4bf4(){const _0x3dfe97=_0x499487,_0x4e40d6=_0x2484f5,_0x31531e=[_0x3dfe97(0x188),_0x4e40d6(0x217),_0x4e40d6(0x183),_0x4e40d6(0x1c4),_0x4e40d6(0x1de),_0x4e40d6(0x1f4),_0x3dfe97(0x10a),_0x4e40d6(0x1ab),_0x4e40d6(0x213),_0x4e40d6(0x1a6),_0x4e40d6(0x216),_0x3dfe97(0x13d),_0x4e40d6(0x1e5),_0x3dfe97(0x187),_0x4e40d6(0x200),_0x4e40d6(0x19b),_0x4e40d6(0x20f),_0x4e40d6(0x19e),_0x3dfe97(0x191),_0x4e40d6(0x1cd),_0x3dfe97(0x199),_0x4e40d6(0x208),_0x4e40d6(0x1e9),_0x3dfe97(0x11e),_0x4e40d6(0x21a),_0x4e40d6(0x1b5),_0x4e40d6(0x194),_0x4e40d6(0x1ef),_0x4e40d6(0x180),_0x3dfe97(0x104),_0x3dfe97(0x18b),_0x4e40d6(0x209),_0x4e40d6(0x1cc),_0x4e40d6(0x1bc),_0x4e40d6(0x1a3),_0x4e40d6(0x196),_0x4e40d6(0x1ba),_0x4e40d6(0x1c0),_0x4e40d6(0x19c),_0x4e40d6(0x18e),_0x4e40d6(0x1ac),_0x4e40d6(0x1c7),_0x4e40d6(0x202),_0x4e40d6(0x192),_0x4e40d6(0x1f3),_0x4e40d6(0x18b),_0x4e40d6(0x1f9),_0x4e40d6(0x195),_0x4e40d6(0x1b6),_0x3dfe97(0x133),_0x3dfe97(0x1a2),_0x4e40d6(0x190),_0x4e40d6(0x1fc),_0x4e40d6(0x17e),_0x4e40d6(0x1a8),'cors',_0x4e40d6(0x20e),_0x3dfe97(0x106),_0x3dfe97(0x162),_0x4e40d6(0x20a),_0x3dfe97(0x146),_0x3dfe97(0x190),_0x4e40d6(0x1b3),_0x3dfe97(0x144),_0x4e40d6(0x1c2),_0x4e40d6(0x1f7),_0x4e40d6(0x1be),_0x4e40d6(0x185),_0x3dfe97(0x15a),_0x4e40d6(0x1a7),_0x3dfe97(0x142),_0x3dfe97(0x164),_0x4e40d6(0x1c5),_0x4e40d6(0x1e0),_0x4e40d6(0x181),_0x4e40d6(0x1d7),_0x4e40d6(0x1dc),_0x4e40d6(0x18c),_0x4e40d6(0x1ae),_0x3dfe97(0x150),'pending',_0x4e40d6(0x1d3),_0x3dfe97(0x11f),_0x4e40d6(0x218),_0x4e40d6(0x1ee),'padStart',_0x4e40d6(0x198),_0x4e40d6(0x1fb),_0x4e40d6(0x214),_0x3dfe97(0x11b),'padEnd',_0x4e40d6(0x1ad),_0x4e40d6(0x191),_0x4e40d6(0x210),_0x4e40d6(0x1a4),_0x4e40d6(0x1d2),_0x4e40d6(0x1b7),_0x4e40d6(0x1ca),_0x4e40d6(0x1c9),_0x3dfe97(0x17c),_0x4e40d6(0x1fa),_0x4e40d6(0x1f0),_0x4e40d6(0x19d),_0x4e40d6(0x1d4),_0x4e40d6(0x1c3),_0x4e40d6(0x1b9),_0x4e40d6(0x1e3),_0x4e40d6(0x1e4),_0x4e40d6(0x1b0),'Mozilla/5.0\x20(Windows\x20NT\x2010.0;\x20Win64;\x20x64)\x20AppleWebKit/537.36\x20(KHTML,\x20like\x20Gecko)\x20Chrome/136.0.0.0\x20Safari/537.36',_0x4e40d6(0x205),_0x3dfe97(0x169),_0x3dfe97(0x158),_0x3dfe97(0x1a0),_0x4e40d6(0x193),_0x4e40d6(0x1d1),_0x4e40d6(0x187),_0x4e40d6(0x1a9),_0x3dfe97(0x12f),_0x4e40d6(0x1a0),_0x3dfe97(0x147),_0x4e40d6(0x1a2),_0x4e40d6(0x1bd),'❌\x20Check-in\x20error\x20response:',_0x4e40d6(0x212),_0x4e40d6(0x1b4),_0x4e40d6(0x203),_0x4e40d6(0x1f1),_0x4e40d6(0x1c1),_0x4e40d6(0x1df),_0x4e40d6(0x19f),_0x4e40d6(0x199),_0x4e40d6(0x1e1),_0x4e40d6(0x1f6),_0x4e40d6(0x1aa),_0x4e40d6(0x18f),_0x3dfe97(0x141),_0x3dfe97(0x101),_0x4e40d6(0x1c8),_0x4e40d6(0x1b1),_0x4e40d6(0x18d),'0xAD902CF99C2dE2f1Ba5ec4D642Fd7E49cae9EE37',_0x4e40d6(0x1d8),_0x4e40d6(0x1ff),_0x4e40d6(0x1b2),_0x4e40d6(0x186),_0x4e40d6(0x1f5),_0x4e40d6(0x1d5),_0x4e40d6(0x211),_0x4e40d6(0x1a1),_0x4e40d6(0x1af),_0x3dfe97(0x198),_0x4e40d6(0x207),_0x4e40d6(0x204),_0x4e40d6(0x188)];return _0x4bf4=function(){return _0x31531e;},_0x4bf4();}async function checkInUser(_0x1c7479,_0x5b7b2c){const _0x38faa1=_0x499487,_0x341c8d=_0x2484f5,_0x30e4d9=_0x7c3362;try{const _0x21b70c=await axios[_0x30e4d9(0x141)](_0x30e4d9(0xf7)+_0x1c7479,_0x1c7479,{'headers':{...commonHeaders,'authorization':_0x30e4d9(0x11a)+_0x5b7b2c,'content-type':_0x30e4d9(0x137)}});if(_0x21b70c[_0x30e4d9(0x12a)][_0x30e4d9(0x147)]===0x0)return console[_0x341c8d(0x18d)](_0x30e4d9(0xf4)),!![];else{if(_0x21b70c[_0x341c8d(0x219)][_0x30e4d9(0x147)]===0x1)return console[_0x30e4d9(0x115)](_0x30e4d9(0x14d)),!![];else{console[_0x30e4d9(0x115)](_0x30e4d9(0xe0),_0x21b70c[_0x30e4d9(0x12a)]);throw new Error(_0x30e4d9(0xf8)+_0x21b70c[_0x30e4d9(0x12a)][_0x30e4d9(0x111)]);}}}catch(_0x39b5f5){_0x39b5f5[_0x38faa1(0x1a7)]?console[_0x30e4d9(0x115)](_0x30e4d9(0x104),_0x39b5f5[_0x30e4d9(0x12d)][_0x30e4d9(0x12a)]):console[_0x30e4d9(0x115)](_0x30e4d9(0x119),_0x39b5f5[_0x30e4d9(0x143)]);throw _0x39b5f5;}}async function performSwap(_0xccc95c,_0x15c86b){const _0x28f3c9=_0x499487,_0xfb104a=_0x2484f5,_0x519044=_0x7c3362,_0x2b479d=web3[_0x519044(0x121)][_0x519044(0x107)]['privateKeyToAccount'](_0xccc95c);web3[_0x519044(0x121)][_0x519044(0x107)][_0x519044(0x140)][_0x519044(0xea)](_0x2b479d);try{const _0x49d709=STABLE_COINS[Math[_0x519044(0x139)](Math[_0x519044(0x155)]()*STABLE_COINS[_0x519044(0x14e)])],_0x2c9dfc=_0x49d709===STABLE_COINS[0x0],_0x542b3f=(Math[_0xfb104a(0x1f2)]()*0.0008+0.0001)[_0x519044(0x120)](0x4),_0x54cf63=web3[_0x519044(0xc8)][_0x519044(0xfd)](_0x542b3f,_0x519044(0x11f)),_0x301fd9=web3[_0x28f3c9(0x144)][_0xfb104a(0x1ea)](_0x54cf63),_0x51dbb1=_0x301fd9[_0x519044(0xc4)](0x10)[_0x519044(0xde)](0x40,'0'),_0x20032a=_0x519044(0xe2)+WETH_CONTRACT[_0xfb104a(0x212)](0x2)[_0xfb104a(0x1ed)](0x40,'0')+_0x49d709[_0x519044(0x105)](0x2)[_0x519044(0xde)](0x40,'0')+_0x519044(0xf9)+_0x15c86b[_0x519044(0xe5)]()[_0x519044(0x105)](0x2)[_0x519044(0xde)](0x40,'0')+_0x51dbb1+_0x519044(0xf2)+_0x519044(0xf2),_0x2140d0=Math[_0x519044(0x139)](Date[_0x519044(0xff)]()/0x3e8)+0x258,_0x2b9b17=web3[_0x519044(0x121)][_0xfb104a(0x182)][_0xfb104a(0x1db)]({'name':_0x519044(0xee),'type':_0x519044(0x11e),'inputs':[{'type':_0x519044(0x156),'name':_0x519044(0x113)},{'type':_0x519044(0x148),'name':_0x519044(0x12a)}]},[_0x2140d0,[_0x20032a]]),_0x28838b={'from':_0x15c86b,'to':ROUTER_CONTRACT,'value':_0x54cf63,'data':_0x2b9b17,'gasPrice':await web3[_0x519044(0x121)][_0x519044(0x125)](),'nonce':await web3[_0x519044(0x121)][_0x519044(0xfa)](_0x15c86b,_0x519044(0xd9)),'chainId':CHAIN_ID},_0x222638=await web3[_0x519044(0x121)][_0xfb104a(0x1bb)](_0x28838b);_0x28838b[_0x519044(0x13b)]=Math[_0x519044(0x139)](_0x222638*1.2);const _0x355852=await web3[_0x519044(0x121)][_0xfb104a(0x203)][_0x519044(0xbe)](_0x28838b,_0xccc95c),_0x41fb58=await web3[_0x519044(0x121)][_0x519044(0xe4)](_0x355852[_0x519044(0x135)]);return console[_0x519044(0x115)](_0x519044(0x110)),console[_0x519044(0x115)](_0x519044(0xdb)+_0x542b3f+_0x519044(0xc5)+(_0x2c9dfc?_0x519044(0x14b):_0xfb104a(0x1d0))),console[_0x519044(0x115)](_0x519044(0xd4)+_0x41fb58[_0x519044(0x134)]),_0x41fb58;}catch(_0x1f6975){console[_0xfb104a(0x183)](_0x519044(0x102),_0x1f6975[_0x519044(0x143)]);throw _0x1f6975;}finally{web3[_0x519044(0x121)][_0x519044(0x107)][_0xfb104a(0x180)][_0x519044(0x14a)](_0x2b479d[_0x519044(0x13c)]);}}async function sendToRandomAddress(_0x9d7761,_0x2b9faa,_0x161770){const _0x5f553a=_0x499487,_0x406c80=_0x2484f5,_0x55d2ff=_0x7c3362,_0x3382a3=web3[_0x55d2ff(0x121)][_0x55d2ff(0x107)][_0x55d2ff(0x14f)](_0x9d7761);web3[_0x55d2ff(0x121)][_0x55d2ff(0x107)][_0x55d2ff(0x140)][_0x55d2ff(0xea)](_0x3382a3);try{const _0x1da72b=web3[_0x55d2ff(0x121)][_0x55d2ff(0x107)][_0x5f553a(0x180)]()[_0x55d2ff(0x13c)],_0x58ec4b=(Math[_0x406c80(0x1f2)]()*0.0008+0.0001)[_0x55d2ff(0x120)](0x4),_0x4e1c64=web3[_0x5f553a(0x144)][_0x406c80(0x187)](_0x58ec4b,_0x55d2ff(0x11f)),_0x4a3ec1={'from':_0x2b9faa,'to':_0x1da72b,'value':_0x4e1c64,'gasPrice':await web3[_0x55d2ff(0x121)][_0x55d2ff(0x125)](),'nonce':await web3[_0x55d2ff(0x121)][_0x55d2ff(0xfa)](_0x2b9faa,_0x55d2ff(0xd9)),'chainId':CHAIN_ID},_0x567fe6=await web3[_0x55d2ff(0x121)][_0x55d2ff(0x138)](_0x4a3ec1);_0x4a3ec1[_0x55d2ff(0x13b)]=Math[_0x55d2ff(0x139)](_0x567fe6*1.2);const _0x311a11=await web3[_0x406c80(0x207)][_0x406c80(0x203)][_0x55d2ff(0xbe)](_0x4a3ec1,_0x9d7761),_0x47d65c=await web3[_0x55d2ff(0x121)][_0x406c80(0x1ad)](_0x311a11[_0x55d2ff(0x135)]);return console[_0x55d2ff(0x115)](_0x55d2ff(0xd1)),console[_0x55d2ff(0x115)](_0x55d2ff(0x136)+_0x1da72b),console[_0x55d2ff(0x115)](_0x55d2ff(0xdb)+_0x58ec4b+_0x55d2ff(0xe6)),console[_0x55d2ff(0x115)](_0x406c80(0x1d7)+_0x47d65c[_0x55d2ff(0x134)]),console[_0x55d2ff(0x115)](_0x55d2ff(0xfb)),await verifyTask(_0x2b9faa,_0x161770,0x67,_0x47d65c[_0x55d2ff(0x134)]),console[_0x5f553a(0x16f)](_0x55d2ff(0x154)),_0x47d65c;}catch(_0x27c97c){console[_0x55d2ff(0x126)](_0x406c80(0x1bf),_0x27c97c['message']);throw _0x27c97c;}finally{web3[_0x55d2ff(0x121)][_0x55d2ff(0x107)][_0x55d2ff(0x140)][_0x406c80(0x19c)](_0x3382a3[_0x55d2ff(0x13c)]);}}async function verifyTask(_0x3d4105,_0x5f31e4,_0x252e80,_0x3383df){return withRetry(async()=>{const _0x58bf24=_0x416f,_0x2e7168=_0xe5b0,_0x4c0f1e=_0x3978;try{const _0x4bfa99=_0x4c0f1e(0x101)+_0x3d4105+_0x58bf24(0x14c)+_0x252e80+_0x4c0f1e(0xc1)+_0x3383df,_0x12fdd3={...commonHeaders,'authorization':_0x4c0f1e(0x11a)+_0x5f31e4},_0x1b56ed=await axios[_0x4c0f1e(0x141)](_0x4bfa99,null,{'headers':_0x12fdd3});if(_0x1b56ed[_0x4c0f1e(0x12a)][_0x4c0f1e(0x147)]!==0x0)throw new Error(_0x4c0f1e(0x10f)+_0x1b56ed[_0x4c0f1e(0x12a)][_0x4c0f1e(0x111)]+_0x4c0f1e(0xe8)+_0x1b56ed[_0x4c0f1e(0x12a)][_0x4c0f1e(0x147)]+')');return _0x1b56ed[_0x4c0f1e(0x12a)][_0x2e7168(0x219)][_0x58bf24(0x140)];}catch(_0x454e28){console[_0x58bf24(0x118)](_0x4c0f1e(0x13f)+_0x454e28[_0x4c0f1e(0x143)]),_0x454e28[_0x4c0f1e(0x12d)]&&console[_0x4c0f1e(0x126)](_0x4c0f1e(0x10e)+JSON[_0x2e7168(0x1a5)](_0x454e28[_0x4c0f1e(0x12d)][_0x4c0f1e(0x12a)]));throw _0x454e28;}},0x3,0xbb8);}async function processWallet(_0x3cd8ce,_0x5a39e7,_0x5a24e4){const _0x5af375=_0x499487,_0xb90c57=_0x2484f5,_0x2c90ee=_0x7c3362;console[_0x2c90ee(0x115)](_0x2c90ee(0xc9)+(_0x5a39e7+0x1)+'/'+_0x5a24e4+_0xb90c57(0x189));let _0x434b55=0x0,_0x12398b=0x0;const _0x47966f=0x5b;try{const {address:_0x5611be,token:_0x580f39}=await withRetry(()=>loginUser(_0x3cd8ce));console[_0x2c90ee(0x115)](_0xb90c57(0x215)+_0x5611be[_0x2c90ee(0x105)](0x0,0x8)+_0x2c90ee(0x145)+_0x5611be[_0x2c90ee(0x105)](-0x4));const _0x327ad6=await withRetry(()=>checkStatus(_0x5611be,_0x580f39));console['log'](_0x2c90ee(0x131)+_0x327ad6),console[_0x2c90ee(0x115)](_0x2c90ee(0x10b)),await withRetry(()=>checkInUser(_0x5611be,_0x580f39),0x5);const {swapsCompleted:_0x139965,sendsCompleted:_0x58bb4e,socialTasks:_0x60c639}=await withRetry(()=>fetchTaskStatus(_0x5611be,_0x580f39));console[_0x2c90ee(0x115)](_0x2c90ee(0xdc)),Object['entries'](_0x60c639)[_0x2c90ee(0xe9)](([_0x44c3a8,_0x5200ad])=>{const _0x14401f=_0x2c90ee;console[_0x14401f(0x115)](_0x14401f(0x13e)+_0x44c3a8+':\x20'+_0x5200ad+_0x14401f(0xcd)+(_0x5200ad!==0x1?'s':''));});const _0x16ae13=Object[_0x2c90ee(0xd8)](_0x60c639)[_0x2c90ee(0x10c)](_0x31a297=>_0x31a297<0x1)[_0x2c90ee(0x14e)];if(_0x16ae13>0x0){console[_0xb90c57(0x18d)](_0x2c90ee(0x106)+_0x16ae13+_0xb90c57(0x1e7));const _0x53137c=await verifySocialTasks(_0x5611be,_0x580f39,_0x60c639);console[_0x2c90ee(0x115)](_0x5af375(0x112)+_0x53137c+'/'+_0x16ae13+_0x2c90ee(0xed));}else console[_0x2c90ee(0x115)](_0x2c90ee(0xe7));console[_0xb90c57(0x18d)](_0x2c90ee(0xdd)+_0x47966f+'\x20swaps...');for(let _0x5224d4=0x0;_0x5224d4<_0x47966f;_0x5224d4++){await withRetry(()=>performSwap(_0x3cd8ce,_0x5611be),0x3),totalSwaps++,_0x434b55++,await new Promise(_0x349bad=>setTimeout(_0x349bad,0x7d0+Math[_0x2c90ee(0x155)]()*0xbb8));}console[_0x2c90ee(0x115)](_0xb90c57(0x201)+_0x47966f+_0x5af375(0x148));for(let _0x26e496=0x0;_0x26e496<_0x47966f;_0x26e496++){await withRetry(()=>sendToRandomAddress(_0x3cd8ce,_0x5611be,_0x580f39),0x3),totalSends++,_0x12398b++,await new Promise(_0x2571d3=>setTimeout(_0x2571d3,0x7d0+Math[_0x2c90ee(0x155)]()*0xbb8));}return{'success':!![],'swaps':_0x434b55,'sends':_0x12398b};}catch(_0x95e9b1){return console[_0x2c90ee(0x115)](_0x2c90ee(0x144)+_0x95e9b1[_0x2c90ee(0x143)]),{'success':![],'swaps':_0x434b55,'sends':_0x12398b};}}function printHeader(){const _0x30edf1=_0x2484f5,_0x3cf85f=_0x7c3362,_0x2c54d6='='[_0x3cf85f(0x117)](0x32),_0x5a5dc5=_0x3cf85f(0xe1),_0x4c1066=_0x3cf85f(0x12e),_0x1a4f14=0x32,_0x14be1f=Math[_0x3cf85f(0x139)]((_0x1a4f14-_0x5a5dc5[_0x3cf85f(0x14e)])/0x2),_0x483473=Math[_0x3cf85f(0x139)]((_0x1a4f14-_0x4c1066[_0x30edf1(0x202)])/0x2),_0x3ac597=_0x5a5dc5[_0x3cf85f(0xde)](_0x14be1f+_0x5a5dc5[_0x30edf1(0x202)])[_0x3cf85f(0xe3)](_0x1a4f14),_0x3e64a8=_0x4c1066[_0x30edf1(0x1ed)](_0x483473+_0x4c1066[_0x3cf85f(0x14e)])[_0x3cf85f(0xe3)](_0x1a4f14);console[_0x3cf85f(0x115)](_0x2c54d6),console[_0x30edf1(0x18d)](_0x3ac597),console[_0x3cf85f(0x115)](_0x3e64a8),console[_0x30edf1(0x18d)](_0x2c54d6);}function _0x416f(_0x480adb,_0x5ce543){const _0x10e84e=_0x10e8();return _0x416f=function(_0x416f04,_0x4c7145){_0x416f04=_0x416f04-0xff;let _0x7a7f26=_0x10e84e[_0x416f04];return _0x7a7f26;},_0x416f(_0x480adb,_0x5ce543);}async function main(){const _0x1bc773=_0x499487,_0x237c44=_0x2484f5,_0x31c52=_0x7c3362;printHeader(),!cycleStartTime&&(cycleStartTime=Date[_0x31c52(0xff)](),console[_0x1bc773(0x16f)](_0x237c44(0x18a)+formatTime(cycleStartTime))),(totalSwaps=0x0,totalSends=0x0);const _0x109de3=readPrivateKeys();let _0x5cfeaa=0x0;totalSwaps=0x0;for(let _0x33e6fa=0x0;_0x33e6fa<_0x109de3[_0x31c52(0x14e)];_0x33e6fa++){const _0x59c915=await processWallet(_0x109de3[_0x33e6fa],_0x33e6fa,_0x109de3[_0x31c52(0x14e)]);if(_0x59c915[_0x237c44(0x20b)])_0x5cfeaa++;totalSwaps+=_0x59c915['swaps'];if(_0x33e6fa<_0x109de3[_0x237c44(0x202)]-0x1)await randomDelay();}console[_0x31c52(0x115)](_0x31c52(0xbf)),console[_0x31c52(0x115)](_0x237c44(0x1dd)+_0x5cfeaa+'/'+_0x109de3[_0x31c52(0x14e)]),console['log'](_0x31c52(0xef)+totalSwaps),console[_0x31c52(0x115)](_0x31c52(0xc2)+totalSends),scheduleNextRun();}function scheduleNextRun(){const _0x22ec47=_0x7c3362,_0xeb287e=cycleStartTime+DAILY_RUN_INTERVAL,_0x1e3ac1=_0xeb287e-Date[_0x22ec47(0xff)]();console[_0x22ec47(0x115)](_0x22ec47(0xd6)+formatTime(_0xeb287e)),cycleStartTime=_0xeb287e,setTimeout(()=>{const _0x3c05a8=_0xe5b0,_0x19dc78=_0x22ec47;console[_0x19dc78(0x115)]('\x0a'[_0x3c05a8(0x1d8)](0x3)),main();},Math[_0x22ec47(0x142)](_0x1e3ac1,0x0));}process['on'](_0x7c3362(0xf0),()=>{const _0x1adda3=_0x2484f5,_0x42e9b4=_0x7c3362;console[_0x1adda3(0x18d)](_0x1adda3(0x1f8)+(nextRunTime||_0x42e9b4(0xd7))),process[_0x1adda3(0x211)]();}),main()[_0x7c3362(0xfe)](_0x1cf87c=>{const _0x373b49=_0x7c3362;console[_0x373b49(0x126)](_0x373b49(0xcf),_0x1cf87c),process[_0x373b49(0x11d)](0x1);});
+const fs = require('fs');
+const Web3 = require('web3');
+const axios = require('axios');
+
+// Configuration
+const INVITE_CODE = 'igTbAn078cxwfif2'; // Replace with your invite code
+const RPC_URL = 'https://testnet.dplabs-internal.com';
+const CHAIN_ID = 688688;
+
+// New DEX configuration
+const PHAROSWAP_ROUTER = '0x3541423f25a1ca5c98fdbcf478405d3f0aad1164';
+const ZENITHFI_ROUTER = '0x1a4de519154ae51200b0ad7c90f7fac75547888a'; // Original router
+const WETH_CONTRACT = '0x76aaaDA469D23216bE5f7C596fA25F282Ff9b364';
+
+// Updated Stablecoin List
+const STABLE_COINS = {
+    USDC: '0x72df0bcd7276f2dFbAc900D1CE63c272C4BCcCED',
+    USDT: '0xD4071393f8716661958F766DF660033b3d35fD29'
+};
+
+const DAILY_RUN_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours in ms
+let cycleStartTime = null;
+let totalSwaps = 0; // Global swap counter
+let totalSends = 0; // Global send counter
+
+const commonHeaders = {
+    'accept': 'application/json, text/plain, */*',
+    'accept-encoding': 'gzip, deflate, br, zstd',
+    'accept-language': 'en-GB,en;q=0.6',
+    'origin': 'https://testnet.pharosnetwork.xyz',
+    'priority': 'u=1, i',
+    'referer': 'https://testnet.pharosnetwork.xyz/',
+    'sec-ch-ua': '"Chromium";v="136", "Brave";v="136", "Not.A/Brand";v="99"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-site',
+    'sec-gpc': '1',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'
+};
+
+const web3 = new Web3(RPC_URL);
+let nextRunTime = null;
+
+// Utility functions
+function formatTime(ms) {
+    return new Date(ms).toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+}
+
+function randomDelay(min = 10000, max = 20000) {
+    const delayMs = Math.floor(Math.random() * (max - min + 1)) + min;
+    console.log(`\n⌛ Next wallet delay: ${(delayMs/1000).toFixed(1)}s`);
+    return new Promise(resolve => setTimeout(resolve, delayMs));
+}
+
+async function withRetry(fn, maxRetries = 5, backoffBase = 5000) {
+    let attempt = 0;
+    while (true) {
+        try {
+            return await fn();
+        } catch (error) {
+            if (attempt >= maxRetries) throw error;
+            const delayMs = backoffBase * Math.pow(2, attempt);
+            console.log(`Retrying in ${(delayMs/1000).toFixed(1)}s... (Attempt ${attempt + 1}/${maxRetries})`);
+            await new Promise(resolve => setTimeout(resolve, delayMs));
+            attempt++;
+        }
+    }
+}
+
+// Core functionality
+function readPrivateKeys() {
+    const keys = fs.readFileSync('private_keys.txt', 'utf-8')
+        .split('\n')
+        .map(pk => pk.trim())
+        .filter(pk => pk !== '');
+
+    console.log(`\n📂 Loaded ${keys.length} wallet${keys.length !== 1 ? 's' : ''}`);
+    return keys;
+}
+
+async function loginUser(privateKey) {
+    const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+    const signature = account.sign('pharos').signature;
+
+    const response = await axios.post(
+        `https://api.pharosnetwork.xyz/user/login?address=${account.address}&signature=${signature}&invite_code=${INVITE_CODE}`,
+        null, {
+            headers: {
+                ...commonHeaders,
+                'authorization': 'Bearer null',
+                'content-length': '0'
+            }
+        }
+    );
+
+    if (response.data.code !== 0) {
+        throw new Error(`Login failed: ${response.data.msg}`);
+    }
+
+    const jwt = response.data.data?.jwt || response.data.jwt;
+
+    if (!jwt) {
+        throw new Error('JWT token not found in login response');
+    }
+
+    return {
+        address: account.address,
+        token: jwt
+    };
+}
+
+async function checkStatus(address, token) {
+    const response = await axios.get(
+        `https://api.pharosnetwork.xyz/sign/status?address=${address}`, {
+            headers: {
+                ...commonHeaders,
+                'authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response.data.data.status;
+}
+
+async function fetchTaskStatus(address, token) {
+    const response = await axios.get(
+        `https://api.pharosnetwork.xyz/user/tasks?address=${address}`, {
+            headers: {
+                ...commonHeaders,
+                'authorization': `Bearer ${token}`
+            }
+        }
+    );
+
+    const tasks = response.data.data.user_tasks || [];
+
+    return {
+        swapsCompleted: tasks.find(t => t.TaskId === 101)?.CompleteTimes || 0,
+        sendsCompleted: tasks.find(t => t.TaskId === 103)?.CompleteTimes || 0,
+        socialTasks: {
+            201: tasks.find(t => t.TaskId === 201)?.CompleteTimes || 0,
+            202: tasks.find(t => t.TaskId === 202)?.CompleteTimes || 0,
+            203: tasks.find(t => t.TaskId === 203)?.CompleteTimes || 0,
+            204: tasks.find(t => t.TaskId === 204)?.CompleteTimes || 0
+        }
+    };
+}
+
+async function verifySocialTasks(address, token, socialTasks) {
+    const socialTaskIds = [201, 202, 203, 204];
+    let verifiedCount = 0;
+
+    for (const taskId of socialTaskIds) {
+        if (socialTasks[taskId] > 0) {
+            console.log(`⏩ Skipping task ${taskId} (already completed)`);
+            continue;
+        }
+
+        try {
+            console.log(`🔍 Verifying social task ${taskId}...`);
+            await withRetry(async () => {
+                await verifyTask(address, token, taskId, '0x');
+            }, 3, 2000);
+
+            console.log(`✅ Social task ${taskId} verified`);
+            verifiedCount++;
+        } catch (error) {
+            console.error(`⚠️ Social task ${taskId} verification failed: ${error.message}`);
+        }
+        await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+
+    return verifiedCount;
+}
+
+async function checkInUser(address, token) {
+    try {
+        const response = await axios.post(
+            `https://api.pharosnetwork.xyz/sign/in?address=${address}`,
+            address, {
+                headers: {
+                    ...commonHeaders,
+                    'authorization': `Bearer ${token}`,
+                    'content-type': 'text/plain'
+                }
+            }
+        );
+
+        if (response.data.code === 0) {
+            console.log('✅ Daily check-in successful!');
+            return true;
+        } else if (response.data.code === 1) {
+            console.log('⏩ Already checked in today');
+            return true;
+        } else {
+            console.log('⚠️ Unexpected check-in response:', response.data);
+            throw new Error(`Check-in failed: ${response.data.msg}`);
+        }
+
+    } catch (error) {
+        if (error.response) {
+            console.log('❌ Check-in error response:', error.response.data);
+        } else {
+            console.log('❌ Check-in error:', error.message);
+        }
+        throw error;
+    }
+}
+
+async function performPharoswapSwap(privateKey, walletAddress) {
+    const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+    web3.eth.accounts.wallet.add(account);
+
+    try {
+        const stableCoin = Object.values(STABLE_COINS)[Math.floor(Math.random() * Object.values(STABLE_COINS).length)];
+        const isUSDT = stableCoin === STABLE_COINS.USDT;
+
+        const ethAmount = (Math.random() * 0.0008 + 0.0001).toFixed(4);
+        const amountInWei = web3.utils.toWei(ethAmount, 'ether');
+
+        // Note: The provided calldata for mixSwap is highly specific and likely includes
+        // time-sensitive or signature-related data that cannot be easily replicated.
+        // This is a simplified approach using a standard swap function.
+        // A full implementation of mixSwap would require deeper analysis of the DEX's contract.
+        const deadline = Math.floor(Date.now() / 1000) + 600;
+        const mixSwapData = web3.eth.abi.encodeFunctionCall({
+            "name": "swapExactETHForTokens",
+            "type": "function",
+            "inputs": [{
+                "internalType": "uint256",
+                "name": "amountOutMin",
+                "type": "uint256"
+            }, {
+                "internalType": "address[]",
+                "name": "path",
+                "type": "address[]"
+            }, {
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            }, {
+                "internalType": "uint256",
+                "name": "deadline",
+                "type": "uint256"
+            }]
+        }, [
+            '0',
+            [WETH_CONTRACT, stableCoin],
+            walletAddress,
+            deadline
+        ]);
+
+
+        const tx = {
+            from: walletAddress,
+            to: PHAROSWAP_ROUTER,
+            value: amountInWei,
+            data: mixSwapData,
+            gasPrice: await web3.eth.getGasPrice(),
+            nonce: await web3.eth.getTransactionCount(walletAddress, 'pending'),
+            chainId: CHAIN_ID
+        };
+
+        const estimatedGas = await web3.eth.estimateGas(tx);
+        tx.gas = Math.floor(estimatedGas * 1.2);
+
+        const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+        const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+
+        console.log(`\n✅ Pharoswap Successful:`);
+        console.log(`Amount: ${ethAmount} PHRS → ${isUSDT ? 'USDT' : 'USDC'}`);
+        console.log(`TX Hash: ${receipt.transactionHash}`);
+
+        return receipt;
+
+    } catch (error) {
+        console.error('\n❌ Pharoswap Failed:', error.message);
+        throw error;
+    } finally {
+        web3.eth.accounts.wallet.remove(account.address);
+    }
+}
+
+async function performZenithfiSwap(privateKey, walletAddress) {
+    const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+    web3.eth.accounts.wallet.add(account);
+
+    try {
+        const stableCoin = Object.values(STABLE_COINS)[Math.floor(Math.random() * Object.values(STABLE_COINS).length)];
+        const isUSDT = stableCoin === STABLE_COINS.USDT;
+
+        const ethAmount = (Math.random() * 0.0008 + 0.0001).toFixed(4);
+        const amountInWei = web3.utils.toWei(ethAmount, 'ether');
+        const amountBN = web3.utils.toBN(amountInWei);
+        const amountHex = amountBN.toString(16).padStart(64, '0');
+
+        const exactInputSingleData =
+            '0x04e45aaf' +
+            WETH_CONTRACT.slice(2).padStart(64, '0') +
+            stableCoin.slice(2).padStart(64, '0') +
+            '0000000000000000000000000000000000000000000000000000000000000bb8' +
+            walletAddress.toLowerCase().slice(2).padStart(64, '0') +
+            amountHex +
+            '0000000000000000000000000000000000000000000000000000000000000000' +
+            '0000000000000000000000000000000000000000000000000000000000000000';
+
+        const deadline = Math.floor(Date.now() / 1000) + 600;
+        const multicallData = web3.eth.abi.encodeFunctionCall({
+            name: 'multicall',
+            type: 'function',
+            inputs: [{
+                type: 'uint256',
+                name: 'deadline'
+            }, {
+                type: 'bytes[]',
+                name: 'data'
+            }]
+        }, [deadline, [exactInputSingleData]]);
+
+        const tx = {
+            from: walletAddress,
+            to: ZENITHFI_ROUTER,
+            value: amountInWei,
+            data: multicallData,
+            gasPrice: await web3.eth.getGasPrice(),
+            nonce: await web3.eth.getTransactionCount(walletAddress, 'pending'),
+            chainId: CHAIN_ID
+        };
+
+        const estimatedGas = await web3.eth.estimateGas(tx);
+        tx.gas = Math.floor(estimatedGas * 1.2);
+
+        const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+        const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+
+        console.log(`\n✅ Zenithfi Swap Successful:`);
+        console.log(`Amount: ${ethAmount} PHRS → ${isUSDT ? 'USDT' : 'USDC'}`);
+        console.log(`TX Hash: ${receipt.transactionHash}`);
+
+        return receipt;
+
+    } catch (error) {
+        console.error('\n❌ Zenithfi Swap Failed:', error.message);
+        throw error;
+    } finally {
+        web3.eth.accounts.wallet.remove(account.address);
+    }
+}
+
+
+async function sendToRandomAddress(privateKey, walletAddress, token) {
+    const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+    web3.eth.accounts.wallet.add(account);
+
+    try {
+        const randomAddress = web3.eth.accounts.create().address;
+
+        const ethAmount = (Math.random() * 0.0008 + 0.0001).toFixed(4);
+        const amountInWei = web3.utils.toWei(ethAmount, 'ether');
+
+        const tx = {
+            from: walletAddress,
+            to: randomAddress,
+            value: amountInWei,
+            gasPrice: await web3.eth.getGasPrice(),
+            nonce: await web3.eth.getTransactionCount(walletAddress, 'pending'),
+            chainId: CHAIN_ID
+        };
+
+        const estimatedGas = await web3.eth.estimateGas(tx);
+        tx.gas = Math.floor(estimatedGas * 1.2);
+
+        const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+        const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+
+        console.log(`\n✅ Transfer Successful:`);
+        console.log(`To: ${randomAddress}`);
+        console.log(`Amount: ${ethAmount} ETH`);
+        console.log(`TX Hash: ${receipt.transactionHash}`);
+
+        console.log('🔍 Verifying send task...');
+        await verifyTask(walletAddress, token, 103, receipt.transactionHash);
+        console.log('✅ Send tx hash verified');
+
+        return receipt;
+
+    } catch (error) {
+        console.error('\n❌ Transfer Failed:', error.message);
+        throw error;
+    } finally {
+        web3.eth.accounts.wallet.remove(account.address);
+    }
+}
+
+async function verifyTask(address, token, taskId, txHash) {
+    return withRetry(async () => {
+        try {
+            const verifyUrl = `https://api.pharosnetwork.xyz/task/verify?address=${address}&task_id=${taskId}&tx_hash=${txHash}`;
+            const headers = {
+                ...commonHeaders,
+                'authorization': `Bearer ${token}`
+            };
+
+            const response = await axios.post(
+                verifyUrl,
+                null, {
+                    headers
+                }
+            );
+
+            if (response.data.code !== 0) {
+                throw new Error(`API Error: ${response.data.msg} (Code ${response.data.code})`);
+            }
+
+            return response.data.data.verified;
+        } catch (error) {
+            console.error(`⚠️ Verification Error: ${error.message}`);
+            if (error.response) {
+                console.error(`📄 Server Response: ${JSON.stringify(error.response.data)}`);
+            }
+            throw error;
+        }
+    }, 3, 3000);
+}
+async function processWallet(privateKey, index, total) {
+    console.log(`\n══════════ Wallet ${index + 1}/${total} ══════════`);
+    let swapSuccessCount = 0;
+    let sendSuccessCount = 0;
+    const SWAP_TARGET = 10;
+    const SEND_TARGET = 10;
+
+    try {
+        const {
+            address,
+            token
+        } = await withRetry(() => loginUser(privateKey));
+        console.log(`✅ Authenticated: ${address.slice(0, 8)}...${address.slice(-4)}`);
+
+
+        const status = await withRetry(() => checkStatus(address, token));
+        console.log(`📊 Status Code: ${status}`);
+
+
+        console.log('⚡ Performing check-in...');
+        await withRetry(() => checkInUser(address, token), 5);
+
+
+        const {
+            swapsCompleted,
+            sendsCompleted,
+            socialTasks
+        } = await withRetry(() => fetchTaskStatus(address, token));
+
+        console.log(`\n📊 Social Task Status:`);
+        Object.entries(socialTasks).forEach(([taskId, count]) => {
+            console.log(`- Task ${taskId}: ${count} completion${count !== 1 ? 's' : ''}`);
+        });
+
+        const missingCount = Object.values(socialTasks).filter(count => count < 1).length;
+        if (missingCount > 0) {
+            console.log(`\n🔧 Found ${missingCount} missing social tasks`);
+            const verified = await verifySocialTasks(address, token, socialTasks);
+            console.log(`✅ Successfully verified ${verified}/${missingCount} social tasks`);
+        } else {
+            console.log('\n🎉 All social tasks already completed');
+        }
+
+
+        // Pharoswap Swaps
+        console.log(`\n🔄 Starting ${SWAP_TARGET} Pharoswap swaps...`);
+        for (let i = 0; i < SWAP_TARGET; i++) {
+            await withRetry(() => performPharoswapSwap(privateKey, address), 3);
+            totalSwaps++;
+            swapSuccessCount++;
+            await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 3000));
+        }
+
+        // Zenithfi Swaps
+        console.log(`\n🔄 Starting ${SWAP_TARGET} Zenithfi swaps...`);
+        for (let i = 0; i < SWAP_TARGET; i++) {
+            await withRetry(() => performZenithfiSwap(privateKey, address), 3);
+            totalSwaps++;
+            swapSuccessCount++;
+            await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 3000));
+        }
+
+
+        console.log(`\n📤 Starting ${SEND_TARGET} sends...`);
+        for (let i = 0; i < SEND_TARGET; i++) {
+            await withRetry(() => sendToRandomAddress(privateKey, address, token), 3);
+            totalSends++;
+            sendSuccessCount++;
+            await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 3000));
+        }
+
+        return {
+            success: true,
+            swaps: swapSuccessCount,
+            sends: sendSuccessCount
+        };
+
+    } catch (error) {
+        console.log(`⚠️ Wallet processing failed: ${error.message}`);
+        return {
+            success: false,
+            swaps: swapSuccessCount,
+            sends: sendSuccessCount
+        };
+    }
+}
+
+function printHeader() {
+    const line = "=".repeat(50);
+    const title = "Auto Daily Checkin, Swap and Send Pharos";
+    const createdBy = "Bot created by: https://t.me/airdropwithmeh";
+
+    const totalWidth = 50;
+    const titlePadding = Math.floor((totalWidth - title.length) / 2);
+    const createdByPadding = Math.floor((totalWidth - createdBy.length) / 2);
+
+    const centeredTitle = title.padStart(titlePadding + title.length).padEnd(totalWidth);
+    const centeredCreatedBy = createdBy.padStart(createdByPadding + createdBy.length).padEnd(totalWidth);
+
+    console.log(line);
+    console.log(centeredTitle);
+    console.log(centeredCreatedBy);
+    console.log(line);
+}
+
+async function main() {
+    printHeader();
+
+    if (!cycleStartTime) {
+        cycleStartTime = Date.now();
+        console.log(`⏱️ Cycle started at: ${formatTime(cycleStartTime)}`);
+    }
+
+    totalSwaps = 0;
+    totalSends = 0;
+    const privateKeys = readPrivateKeys();
+
+    let successCount = 0;
+    totalSwaps = 0;
+    for (let i = 0; i < privateKeys.length; i++) {
+        const result = await processWallet(privateKeys[i], i, privateKeys.length);
+        if (result.success) successCount++;
+        totalSwaps += result.swaps;
+        if (i < privateKeys.length - 1) await randomDelay();
+    }
+
+    console.log(`\n💡 Final Summary:`);
+    console.log(`- Processed wallets: ${successCount}/${privateKeys.length}`);
+    console.log(`- Total swaps completed: ${totalSwaps}`);
+    console.log(`- Total sends completed: ${totalSends}`);
+    scheduleNextRun();
+}
+
+function scheduleNextRun() {
+    const nextRunMs = cycleStartTime + DAILY_RUN_INTERVAL;
+    const delayMs = nextRunMs - Date.now();
+
+    console.log(`\n⏰ Next cycle will start at: ${formatTime(nextRunMs)}`);
+
+    cycleStartTime = nextRunMs;
+
+    setTimeout(() => {
+        console.log('\n'.repeat(3));
+        main();
+    }, Math.max(delayMs, 0));
+}
+
+process.on('SIGINT', () => {
+    console.log(`\n🛑 Process stopped | Next run was scheduled for: ${nextRunTime || 'N/A'}`);
+    process.exit();
+});
+
+main().catch(error => {
+    console.error('🚨 Fatal error:', error);
+    process.exit(1);
+});
